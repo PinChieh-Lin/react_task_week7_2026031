@@ -53,12 +53,24 @@ function Cart() {
             console.log(error.response);
         }
     }
+
+    const delAllCart = async () => {
+        try {
+            const response = await axios.delete(`${API_BASE}/api/${API_PATH}/carts`)
+            console.log(response.data);
+            //比較笨的方法重新呼叫getCart來更新購物車資料，因為後端沒有提供更新後回傳整筆購物車資料的API，所以只能這樣做了。
+            const response2 = await axios.get(`${API_BASE}/api/${API_PATH}/cart`)
+            setCart(response2.data.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     return (
         // src/views/front/Cart.jsx
         <div className="container">
             <h2>購物車列表</h2>
             <div className="text-end mt-4">
-                <button type="button" className="btn btn-outline-danger">
+                <button type="button" className="btn btn-outline-danger" onClick={delAllCart}>
                     清空購物車
                 </button>
             </div>

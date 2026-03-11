@@ -41,14 +41,17 @@ function Login() {
       const response = await axios.post(`${API_BASE}/admin/signin`, formData);
       // console.log(response.data);
     const { token, expired } = response.data;
-      // document.cookie = `hexToken=${token};expires=${new Date(expired)};`;  
+    // document.cookie = `hexToken=${token};expires=${new Date(expired)};`;  
+    // axios.defaults.headers.common["Authorization"] = token; 
+    // 設定全局預設的 Authorization 標頭
        setTimeout(() => {
       document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
     }, 0);
+    navigate("/admin/product"); // 登入成功後導航到後台產品列表頁面
 
       // getProducts();
       // setIsAuth(true);
-            navigate('/products');  // 新增：登入成功後導航到產品頁面
+            // navigate('/products');  // 新增：登入成功後導航到產品頁面
 
     } catch (err) {
       // setIsAuth(false);

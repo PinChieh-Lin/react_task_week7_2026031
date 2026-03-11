@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { createAsuncMessage } from "../slice/messageSlics";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -11,6 +13,7 @@ function ProductModal({
     closeModal,
 }) {
     const [tempData, setTempData] = useState(templateProduct);
+    const dispatch = useDispatch();
     //當前暫存的產品資料
     useEffect(() => {
         setTempData(templateProduct);//當templateProduct改變時，更新tempData
@@ -90,6 +93,7 @@ function ProductModal({
         try {
             const response = await axios[method](url, productData);
             console.log(response.data);
+            dispatch(createAsuncMessage(response.data));
             getProducts();
             closeModal();
         } catch (err) {
